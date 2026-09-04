@@ -1,0 +1,31 @@
+name: Terratest
+
+on:
+  pull_request:
+    types:
+      - opened
+
+permissions:
+  contents: read
+
+jobs:
+  terratest:
+    name: Run Terratest
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: test
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: test/go.mod
+          cache-dependency-path: test/go.sum
+
+      - name: Run Terratest
+        run: go test ./...

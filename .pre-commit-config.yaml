@@ -1,0 +1,29 @@
+repos:
+  - repo: local
+    hooks:
+      - id: tofu-fmt
+        name: Format OpenTofu files
+        entry: tofu fmt
+        language: system
+        files: \.tf$
+        pass_filenames: false
+
+      - id: terraform-docs
+        name: Generate Terraform documentation
+        entry: terraform-docs markdown table --output-file README.md --output-mode inject .
+        language: system
+        files: \.(tf|md)$
+        pass_filenames: false
+
+      - id: gofmt
+        name: Format Go files
+        entry: gofmt -w
+        language: system
+        files: \.go$
+
+      - id: actionlint
+        name: Lint GitHub Actions workflows
+        entry: actionlint
+        language: system
+        files: ^\.github/workflows/.*\.(yaml|yml)$
+        pass_filenames: false
