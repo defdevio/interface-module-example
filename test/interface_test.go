@@ -18,8 +18,13 @@ func TestInterfaceModulePlan(t *testing.T) {
 	options := &terraform.Options{
 		TerraformDir: terraformDir,
 		PlanFilePath: filepath.Join(t.TempDir(), "interface-module.tfplan"),
+		EnvVars: map[string]string{
+			"AWS_ACCESS_KEY_ID":     "testing",
+			"AWS_SECRET_ACCESS_KEY": "testing",
+		},
 		Vars: map[string]any{
-			"account_id": "123456789012",
+			"account_id":                      "123456789012",
+			"aws_skip_credentials_validation": true,
 			"lambda_functions": map[string]any{
 				"orders": map[string]any{
 					"spec": map[string]any{
@@ -70,8 +75,13 @@ func TestInterfaceModuleRejectsUnknownS3Reference(t *testing.T) {
 
 	options := &terraform.Options{
 		TerraformDir: terraformDir,
+		EnvVars: map[string]string{
+			"AWS_ACCESS_KEY_ID":     "testing",
+			"AWS_SECRET_ACCESS_KEY": "testing",
+		},
 		Vars: map[string]any{
-			"account_id": "123456789012",
+			"account_id":                      "123456789012",
+			"aws_skip_credentials_validation": true,
 			"s3_buckets": map[string]any{
 				"broken": map[string]any{
 					"spec": map[string]any{
