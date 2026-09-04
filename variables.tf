@@ -14,6 +14,12 @@ variable "aws_region" {
   default     = "us-west-2"
 }
 
+variable "aws_skip_credentials_validation" {
+  description = "Skip AWS credential, metadata, and account ID validation; intended for plan-only tests."
+  type        = bool
+  default     = false
+}
+
 variable "environment" {
   description = "Environment name; development permits mutable ECR tags."
   type        = string
