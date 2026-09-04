@@ -34,4 +34,4 @@ jobs:
           cache-dependency-path: test/go.sum
 
       - name: Run Terratest
-        run: go test ./...
+        run: go test ./... -v -timeout 30m
