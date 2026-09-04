@@ -86,8 +86,6 @@ The example pins the releases used by the article:
 - `terraform-aws-lambda` `v1.1.1`
 - `terraform-aws-s3` `v1.2.0`
 
-The ECR module does not currently publish `v1.1.0`; the working example therefore uses its actual `v1.0.0` tag.
-
 ## Layout
 
 - `variables.tf`: the consumer API and input validation
@@ -133,7 +131,7 @@ The ECR module does not currently publish `v1.1.0`; the working example therefor
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region where the example resources will be created. | `string` | `"us-west-2"` | no |
 | <a name="input_aws_skip_credentials_validation"></a> [aws\_skip\_credentials\_validation](#input\_aws\_skip\_credentials\_validation) | Skip AWS credential, metadata, and account ID validation; intended for plan-only tests. | `bool` | `false` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment name; development permits mutable ECR tags. | `string` | `"dev"` | no |
-| <a name="input_lambda_functions"></a> [lambda\_functions](#input\_lambda\_functions) | Application Lambda function specifications. | <pre>map(object({<br/>    spec = object({<br/>      concurrent_executions = optional(number, -1)<br/>      description           = string<br/>      environment_variables = optional(map(string), {})<br/>      timeout               = optional(number, 5)<br/><br/>      custom_iam_policy_statements = optional(list(object({<br/>        actions   = set(string)<br/>        effect    = optional(string, "Allow")<br/>        resources = set(string)<br/>        sid       = optional(string)<br/><br/>        conditions = optional(list(object({<br/>          test     = string<br/>          values   = set(string)<br/>          variable = string<br/>        })), [])<br/>      })), [])<br/><br/>      ecr = object({<br/>        image_tag = string<br/>      })<br/>    })<br/>  }))</pre> | `{}` | no |
+| <a name="input_lambda_functions"></a> [lambda\_functions](#input\_lambda\_functions) | A map of Lambda Functions specs to deploy. | <pre>map(object({<br/>    spec = object({<br/>      concurrent_executions = optional(number, -1)<br/>      description           = string<br/>      environment_variables = optional(map(string), {})<br/>      timeout               = optional(number, 5)<br/><br/>      custom_iam_policy_statements = optional(list(object({<br/>        actions   = set(string)<br/>        effect    = optional(string, "Allow")<br/>        resources = set(string)<br/>        sid       = optional(string)<br/><br/>        conditions = optional(list(object({<br/>          test     = string<br/>          values   = set(string)<br/>          variable = string<br/>        })), [])<br/>      })), [])<br/><br/>      ecr = object({<br/>        image_tag = string<br/>      })<br/>    })<br/>  }))</pre> | `{}` | no |
 | <a name="input_s3_buckets"></a> [s3\_buckets](#input\_s3\_buckets) | S3 bucket specifications, optionally associated with a Lambda function key. | <pre>map(object({<br/>    spec = object({<br/>      resource_key_ref    = optional(string, null)<br/>      source_file_path    = optional(string, null)<br/>      source_file_pattern = optional(string, null)<br/>    })<br/>  }))</pre> | `{}` | no |
 
 ## Outputs
