@@ -33,7 +33,7 @@ variable "environment" {
 
 variable "lambda_functions" {
   default     = {}
-  description = "Application Lambda function specifications."
+  description = "A map of Lambda Functions specs to deploy."
 
   type = map(object({
     spec = object({
@@ -64,11 +64,14 @@ variable "lambda_functions" {
   validation {
     condition = alltrue(flatten([
       for _, function in var.lambda_functions : [
-        for statement in function.spec.custom_iam_policy_statements :
-        !contains(statement.actions, "*") && !contains(statement.resources, "*")
-      ]
-    ]))
-    error_message = "Custom IAM policy statements must not use wildcard (*) actions or resources."
+        for _, statement in function.spec.custom_iam_policy_statements :
+        !contains(statement.resources, "*") && !contains(statement.actions, "*")
+      ]]
+    ))
+    error_message = <<-EOM
+      Lambda functions must not use wildcard (*) in their 
+      custom IAM policy statement resources or actions.
+    EOM
   }
 }
 
@@ -87,7 +90,9 @@ variable "s3_buckets" {
   validation {
     condition = alltrue([
       for _, bucket in var.s3_buckets :
-      bucket.spec.resource_key_ref == null ? true : contains(keys(var.lambda_functions), bucket.spec.resource_key_ref)
+      bucket.spec.resource_key_ref == null
+      ? true
+      : contains(keys(var.lambda_functions), bucket.spec.resource_key_ref)
     ])
     error_message = "Each non-null S3 resource_key_ref must match a key in lambda_functions."
   }
