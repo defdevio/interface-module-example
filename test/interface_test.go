@@ -46,7 +46,7 @@ func TestInterfaceModulePlan(t *testing.T) {
 				},
 			},
 			"s3_buckets": map[string]any{
-				"order_exports": map[string]any{
+				"order-exports_prod-data": map[string]any{
 					"spec": map[string]any{
 						"resource_key_ref": "orders",
 					},
@@ -65,7 +65,9 @@ func TestInterfaceModulePlan(t *testing.T) {
 	assert.Contains(t, resourceChanges, fmt.Sprintf(`module.iam.aws_iam_role.this[%q]`, "orders"))
 	assert.Contains(t, resourceChanges, fmt.Sprintf(`module.ecr[%q].aws_ecr_repository.this`, "orders"))
 	assert.Contains(t, resourceChanges, fmt.Sprintf(`module.lambda_functions[%q].aws_lambda_function.this`, "orders"))
-	assert.Contains(t, resourceChanges, fmt.Sprintf(`module.s3[%q].aws_s3_bucket.this`, "order_exports"))
+	orderExportsAddress := fmt.Sprintf(`module.s3[%q].aws_s3_bucket.this`, "order-exports_prod-data")
+	assert.Contains(t, resourceChanges, orderExportsAddress)
+	assert.Equal(t, "123456789012-order-exports-prod-data-us-west-2", resourceChanges[orderExportsAddress].Change.After.(map[string]any)["bucket"])
 	assert.Contains(t, resourceChanges, fmt.Sprintf(`module.s3[%q].aws_s3_bucket.this`, "shared_assets"))
 }
 
