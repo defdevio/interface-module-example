@@ -23,7 +23,7 @@ Call this module from an application or platform stack and provide the consumer 
 module "application" {
   source = "github.com/defdevio/interface-module-example?ref=v1.0.0"
 
-  account_id = var.account_id
+  aws_account_id = var.aws_account_id
 
   lambda_functions = {
     orders = {
@@ -127,7 +127,7 @@ The example pins the releases used by the article:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_account_id"></a> [account\_id](#input\_account\_id) | AWS account ID used in names and IAM trust policies. | `string` | n/a | yes |
+| <a name="input_aws_account_id"></a> [aws\_account\_id](#input\_aws\_account\_id) | AWS account ID used in names and IAM trust policies. | `string` | n/a | yes |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region where the example resources will be created. | `string` | `"us-west-2"` | no |
 | <a name="input_aws_skip_credentials_validation"></a> [aws\_skip\_credentials\_validation](#input\_aws\_skip\_credentials\_validation) | Skip AWS credential, metadata, and account ID validation; intended for plan-only tests. | `bool` | `false` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment name; development permits mutable ECR tags. | `string` | `"dev"` | no |
