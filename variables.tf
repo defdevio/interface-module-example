@@ -1,10 +1,10 @@
-variable "account_id" {
+variable "aws_account_id" {
   description = "AWS account ID used in names and IAM trust policies."
   type        = string
 
   validation {
-    condition     = can(regex("^[0-9]{12}$", var.account_id))
-    error_message = "account_id must be a 12-digit AWS account ID."
+    condition     = can(regex("^[0-9]{12}$", var.aws_account_id))
+    error_message = "aws_account_id must be a 12-digit AWS account ID."
   }
 }
 

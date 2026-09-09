@@ -17,7 +17,7 @@ data "aws_iam_policy_document" "lambda_ecr_pull" {
       variable = "aws:SourceARN"
       values = [
         for key, _ in var.lambda_functions :
-        "arn:aws:lambda:${var.aws_region}:${var.account_id}:function:${replace(key, "_", "-")}"
+        "arn:aws:lambda:${var.aws_region}:${var.aws_account_id}:function:${replace(key, "_", "-")}"
       ]
     }
   }

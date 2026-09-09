@@ -8,13 +8,13 @@ module "s3" {
 
   bucket_name = trimsuffix(
     substr(
-      "${var.account_id}-${replace(each.key, "_", "-")}-${var.aws_region}", 0, 63
+      "${var.aws_account_id}-${replace(each.key, "_", "-")}-${var.aws_region}", 0, 63
     ), "-"
   )
 
   iam_role_arn = each.value.spec.resource_key_ref != null ? format(
     "arn:aws:iam::%s:role/lambda-execution-%s",
-    var.account_id,
+    var.aws_account_id,
     replace(each.value.spec.resource_key_ref, "_", "-")
   ) : null
 }

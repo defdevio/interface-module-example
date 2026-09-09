@@ -23,7 +23,7 @@ func TestInterfaceModulePlan(t *testing.T) {
 			"AWS_SECRET_ACCESS_KEY": "testing",
 		},
 		Vars: map[string]any{
-			"account_id":                      "123456789012",
+			"aws_account_id":                  "123456789012",
 			"aws_skip_credentials_validation": true,
 			"lambda_functions": map[string]any{
 				"orders": map[string]any{
@@ -82,7 +82,7 @@ func TestInterfaceModuleRejectsUnknownS3Reference(t *testing.T) {
 			"AWS_SECRET_ACCESS_KEY": "testing",
 		},
 		Vars: map[string]any{
-			"account_id":                      "123456789012",
+			"aws_account_id":                  "123456789012",
 			"aws_skip_credentials_validation": true,
 			"s3_buckets": map[string]any{
 				"broken": map[string]any{
